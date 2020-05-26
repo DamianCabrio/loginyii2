@@ -17,5 +17,5 @@ $this->params['breadcrumbs'][] = 'Update';
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
-
+    <?= Html::a('Volver atras', ["user/index"], ['class' => 'btn btn-secondary']) ?>
 </div>

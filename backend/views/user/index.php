@@ -58,13 +58,13 @@ Yii::$app->formatter->locale = 'es-AR';
                 'template' => '{mirar} {editar} {eliminar}',  // the default buttons + your custom button
                 'buttons' => [
                     'mirar' => function($url, $model, $key) {     // render your custom button
-                        return Html::a("Mirar", ["site/index"], ['class' => 'btn btn-success btn-xs']);
+                        return Html::a("Mirar", ["user/view?id=". $model->id], ['class' => 'btn btn-success btn-xs']);
                 },
                     'editar' => function($url, $model, $key) {     // render your custom button
-                        return Html::a("Editar", ["site/index"], ['class' => 'btn btn-success btn-xs']);
+                        return Html::a("Editar", ["user/update?id=". $model->id], ['class' => 'btn btn-primary btn-xs']);
                     },
                     'eliminar' => function($url, $model, $key) {     // render your custom button
-                        return Html::a("Eliminar", ["site/index"], ['class' => 'btn btn-success btn-xs']);
+                        return Html::a("Eliminar", ["user/delete?id=". $model->id], ['class' => 'btn btn-danger btn-xs']);
                     }
                 ]
             ],
