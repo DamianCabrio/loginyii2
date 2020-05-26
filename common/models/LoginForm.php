@@ -31,6 +31,15 @@ class LoginForm extends Model
         ];
     }
 
+    public function attributeLabels()
+    {
+        return [
+            "username" => "Nombre de usuario",
+            "password" => "Contraseña",
+            'rememberMe' => 'Recordar',
+        ];
+    }
+
     /**
      * Validates the password.
      * This method serves as the inline validation for password.
@@ -43,7 +52,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'Nombre de usuario o contraseña incorrecta.');
             }
         }
     }
@@ -64,8 +73,14 @@ class LoginForm extends Model
 
     public function loginAdmin()
     {
-        if ($this->validate() && User::isUserAdmin($this->username)) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+        if ($this->validate()) {
+            if (User::isUserAdmin($this->username))
+            {
+                return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+            }else{
+                Yii::$app->session->setFlash('error',
+                    'Debe ser administrador para ingresar al backend. Haga click <a href="http://loginyii2.test/">aqui</a> para volver a la pagina principal.');
+            }
         } else {
             return false;
         }

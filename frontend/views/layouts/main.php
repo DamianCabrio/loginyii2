@@ -31,17 +31,17 @@ AppAsset::register($this);
     NavBar::begin([
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
-        "options" => ["class" => "navbar-expand-lg navbar-light bg-light shadow-sm"]
+        "options" => ["class" => "navbar-expand-lg navbar-light shadow-sm", "style" => "background-color: #e3f2fd;"]
     ]);
-    $menuItems[] = ['label' => 'Home', 'url' => ['/site/index']];
+    $menuItems[] = ['label' => 'Inicio', 'url' => ['/site/index']];
 
     if(!Yii::$app->user->isGuest && Yii::$app->user->identity->isUserAdmin(Yii::$app->user->identity->username)){
-        $menuItems[] = ['label' => 'About', 'url' => ['/site/about']];
+        $menuItems[] = ['label' => 'Acerca de', 'url' => ['/site/about']];
     }
-    $menuItems[] = ['label' => 'Contact', 'url' => ['/site/contact']];
+    $menuItems[] = ['label' => 'Contacto', 'url' => ['/site/contact']];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => 'Registrarse', 'url' => ['/site/signup']];
+        $menuItems[] = ['label' => 'Iniciar sesion', 'url' => ['/site/login']];
     } else {
         $menuItems[] = [
             "label" => "Salir (".Yii::$app->user->identity->username.")",
@@ -60,6 +60,8 @@ AppAsset::register($this);
 
     <div class="container">
         <?= Breadcrumbs::widget([
+            'itemTemplate' => "\n\t<li class=\"breadcrumb-item\"><i>{link}</i></li>\n", // template for all links
+            'activeItemTemplate' => "\t<li class=\"breadcrumb-item active\">{link}</li>\n", // template for the active link
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
@@ -69,9 +71,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?> - Laura Murillo y Damián Cabrio</p>
     </div>
 </footer>
 

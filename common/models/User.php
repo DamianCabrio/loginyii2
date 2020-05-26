@@ -29,7 +29,7 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 10;
     const ROLE_USER = 1;
     const ROLE_MODERADOR = 2;
-    const ROLE_ADMIN = 10;
+    const ROLE_ADMIN = 3;
 
 
     /**
@@ -68,6 +68,14 @@ class User extends ActiveRecord implements IdentityInterface
             self::ROLE_USER => "Usuario",
             self::ROLE_MODERADOR => "Moderador",
             self::ROLE_ADMIN => "Administrador",
+        ];
+    }
+
+    public function getStatusLablesStatus(){
+        return [
+            self::STATUS_DELETED => "Borrado",
+            self::STATUS_INACTIVE => "Inactivo",
+            self::STATUS_ACTIVE => "Activo",
         ];
     }
 
