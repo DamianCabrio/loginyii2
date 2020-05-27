@@ -55,7 +55,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
+            [['username', 'auth_key', 'password_hash', 'email'], 'required'],
             [['status', 'created_at', 'updated_at', 'rol'], 'integer'],
             [['username', 'password_hash', 'password_reset_token', 'email', 'verification_token'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
@@ -65,7 +65,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
             ['rol', 'default', 'value' => 1],
-            ['rol', 'in', 'range' => [self::ROLE_USER, self::ROLE_ADMIN]],
+            ['rol', 'in', 'range' => [self::ROLE_USER, self::ROLE_ADMIN, self::ROLE_MODERADOR]],
         ];
     }
 
@@ -92,16 +92,17 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'username' => 'Username',
-            'auth_key' => 'Auth Key',
-            'password_hash' => 'Password Hash',
-            'password_reset_token' => 'Password Reset Token',
+            'username' => 'Nombre de usuario',
+            'auth_key' => 'Clave de autenticación',
+            'password_hash' => 'Hash de contraseña',
+            'password_reset_token' => 'Token para cambiar la contraseña',
             'email' => 'Email',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'verification_token' => 'Verification Token',
+            'status' => 'Estado',
+            'created_at' => 'Creado en',
+            'updated_at' => 'Actualizado en',
+            'verification_token' => 'Token de verificación',
             'rol' => 'Rol',
+            "password" => "Contraseña"
         ];
     }
 
@@ -255,6 +256,14 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    public function getPassword()
+
+    {
+
+        return '';
+
     }
 
     public static function isUserAdmin($username)
