@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\User */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
+$this->title = $model->id . " - " . $model->username;
+$this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -16,11 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Eliminar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => '¿Estás seguro de que deseas eliminar este elemento?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -30,17 +30,36 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'username',
-            'auth_key',
-            'password_hash',
-            'password_reset_token',
+            [
+                "attribute" => "username",
+                'label' => 'Nombre de usuario',
+            ],
+            //'auth_key',
+            //'password_hash',
+            //'password_reset_token',
             'email:email',
-            'status',
-            'created_at',
-            'updated_at',
-            'verification_token',
-            'rol',
+            [
+                "attribute" => "status",
+                "value"=> function ($model) { return $model->getStatusLablesStatus()[$model->status]; },
+                'label' => 'Estado',
+            ],
+            [
+                "attribute" => "created_at",
+                'label' => 'Creado en',
+                "format" => "datetime",
+            ],
+            [
+                "attribute" => "updated_at",
+                'label' => 'Actualizado en',
+                "format" => "datetime",
+            ],
+            //'verification_token',
+            [
+                "attribute" => "rol",
+                "value"=> function ($model) { return $model->getStatusLables()[$model->rol]; },
+            ],
         ],
     ]) ?>
+    <?= Html::a('Volver atras', ["user/index"], ['class' => 'btn btn-secondary']) ?>
 
 </div>

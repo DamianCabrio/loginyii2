@@ -25,8 +25,6 @@ $this->params['breadcrumbs'][] = $this->title;
         "options" => ["class" => "table-responsive"],
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'id',
             [
                 "attribute" => "username",
@@ -71,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         return Html::a('Eliminar', ['delete', 'id' => $model->id], [
                             'class' => 'btn btn-danger',
                             'data' => [
-                                'confirm' => 'Are you sure you want to delete this item?',
+                                'confirm' => '¿Estás seguro de que deseas eliminar este elemento?',
                                 'method' => 'post',
                             ],
                         ]);

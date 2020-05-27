@@ -17,4 +17,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
     ]) ?>
 
+    <?= Html::a('Volver atras', ["user/index"], ['class' => 'btn btn-secondary']) ?>
+
 </div>

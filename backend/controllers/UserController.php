@@ -2,12 +2,12 @@
 
 namespace backend\controllers;
 
-use Yii;
-use common\models\User;
 use app\models\UserSearch;
+use common\models\User;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -66,13 +66,16 @@ class UserController extends Controller
     {
         $model = new User();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->setPassword(Yii::$app->request->post()["password"]);
+        $request = Yii::$app->request;
+
+        if ($model->load($request->post())) {
+            $model->setPassword($request->post("password"));
             $model->generateAuthKey();
             $model->generateEmailVerificationToken();
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
-
         return $this->render('create', [
             'model' => $model,
         ]);
